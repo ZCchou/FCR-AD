@@ -3,6 +3,11 @@
   "version": "0.1.0",
   "files": [
     {
+      "path": ".gitattributes",
+      "bytes": 79,
+      "sha256": "d9ff5d60f637ce9858ab32e79b184894710da12000a762653848b25d9517335b"
+    },
+    {
       "path": ".gitignore",
       "bytes": 175,
       "sha256": "85b8b4d7356195c3f1fe48cb853ef48fdd4c9ee65bcc0a90f61953e6a7062ddb"

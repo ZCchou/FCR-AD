@@ -1,0 +1,2 @@
+# Keep verified source and metadata bytes identical on every platform.
+* -text
