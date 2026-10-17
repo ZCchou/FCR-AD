@@ -1,0 +1,100 @@
+{
+  "features": [
+    "airspeed_commanded",
+    "airspeed_measured",
+    "roll_commanded",
+    "roll_measured",
+    "pitch_commanded",
+    "pitch_measured",
+    "yaw_commanded",
+    "yaw_measured",
+    "tracking_error",
+    "airspeed_error",
+    "altitude_error",
+    "velocity_commanded_x",
+    "velocity_commanded_y",
+    "velocity_commanded_z",
+    "velocity_measured_x",
+    "velocity_measured_y",
+    "velocity_measured_z"
+  ],
+  "mapping": {
+    "airspeed_commanded": {
+      "topic": "mavros-nav_info-airspeed",
+      "field": "field.commanded"
+    },
+    "airspeed_measured": {
+      "topic": "mavros-nav_info-airspeed",
+      "field": "field.measured"
+    },
+    "roll_commanded": {
+      "topic": "mavros-nav_info-roll",
+      "field": "field.commanded"
+    },
+    "roll_measured": {
+      "topic": "mavros-nav_info-roll",
+      "field": "field.measured"
+    },
+    "pitch_commanded": {
+      "topic": "mavros-nav_info-pitch",
+      "field": "field.commanded"
+    },
+    "pitch_measured": {
+      "topic": "mavros-nav_info-pitch",
+      "field": "field.measured"
+    },
+    "yaw_commanded": {
+      "topic": "mavros-nav_info-yaw",
+      "field": "field.commanded"
+    },
+    "yaw_measured": {
+      "topic": "mavros-nav_info-yaw",
+      "field": "field.measured"
+    },
+    "tracking_error": {
+      "topic": "mavros-nav_info-errors",
+      "field": "field.xtrack_error"
+    },
+    "airspeed_error": {
+      "topic": "mavros-nav_info-errors",
+      "field": "field.aspd_error"
+    },
+    "altitude_error": {
+      "topic": "mavros-nav_info-errors",
+      "field": "field.alt_error"
+    },
+    "velocity_commanded_x": {
+      "topic": "mavros-nav_info-velocity",
+      "field": "field.des_x"
+    },
+    "velocity_commanded_y": {
+      "topic": "mavros-nav_info-velocity",
+      "field": "field.des_y"
+    },
+    "velocity_commanded_z": {
+      "topic": "mavros-nav_info-velocity",
+      "field": "field.des_z"
+    },
+    "velocity_measured_x": {
+      "topic": "mavros-nav_info-velocity",
+      "field": "field.meas_x"
+    },
+    "velocity_measured_y": {
+      "topic": "mavros-nav_info-velocity",
+      "field": "field.meas_y"
+    },
+    "velocity_measured_z": {
+      "topic": "mavros-nav_info-velocity",
+      "field": "field.meas_z"
+    }
+  },
+  "excluded": [
+    "headers",
+    "coordinate_frame",
+    "wp_dist",
+    "failure_status",
+    "fault_type",
+    "fault_timestamp",
+    "emergency_responder/traj_file"
+  ]
+}

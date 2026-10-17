@@ -1,0 +1,29 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "fcr-ad"
+version = "0.1.0"
+description = "Forecasting Context Reuse for Anomaly Detection in asynchronous UAV telemetry"
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+  "numpy>=1.26,<2",
+  "pandas>=2.3,<3",
+  "torch>=2.6,<2.7",
+  "scikit-learn==1.7.2",
+  "joblib>=1.4,<2",
+]
+
+[project.urls]
+Repository = "https://github.com/ZCchou/FCR-AD"
+
+[project.scripts]
+fcr-ad = "fcr_ad.cli:main"
+
+[tool.setuptools.packages.find]
+include = ["fcr_ad*"]
+
+[tool.setuptools.package-data]
+fcr_ad = ["resources/*.json", "resources/*.csv"]

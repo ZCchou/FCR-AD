@@ -1,0 +1,99 @@
+{
+  "name": "FCR-AD ALFA author-fixed native asynchronous protocol",
+  "seeds": [
+    42,
+    43,
+    44
+  ],
+  "data": {
+    "split": "splits/alfa_author_fixed.json",
+    "files": {
+      "train": 25,
+      "val": 8,
+      "test": 13
+    },
+    "channels": 15,
+    "omitted_channels": [
+      "yaw_commanded",
+      "yaw_measured"
+    ],
+    "history": 5.0,
+    "horizon": 1.0,
+    "stride": 1.0,
+    "patches": 4,
+    "trim_start_s": 20.0,
+    "fault_guard_s": 0.2,
+    "interpolation": false,
+    "normalization": "healthy train native observations; constant channel std fallback 1.0",
+    "window_label": "event intersects (history_end, evidence_end]"
+  },
+  "model": {
+    "d_model": 128,
+    "d_te": 16,
+    "temporal_bottleneck": 64,
+    "dropout": 0.05,
+    "sensor_relation": "none",
+    "aggregation": "LayerNorm of uniform mean of temporally encoded patches plus positional encoding",
+    "decoder": "deterministic mean"
+  },
+  "training": {
+    "optimizer": "AdamW",
+    "lr": 0.003,
+    "weight_decay": 0.001,
+    "batch_size": 32,
+    "micro_batch_size": 8,
+    "gradient_clip": 1.0,
+    "max_steps": 2400,
+    "validation_interval": 50,
+    "patience_steps": 200,
+    "selection": "healthy validation channel-balanced MSE",
+    "loss": "window-channel-balanced MSE"
+  },
+  "head": {
+    "features": "34 residual + 256 context = 290 fusion",
+    "n_estimators": 300,
+    "max_depth": 3,
+    "learning_rate": 0.05,
+    "min_samples_leaf": 10,
+    "subsample": 0.8,
+    "max_features": 0.8,
+    "weighting": "event",
+    "positive_weight": 0.5,
+    "threshold": {
+      "validation_max_fpr": 0.05,
+      "objective": "max raw F1 then min raw FPR then max threshold",
+      "comparison": ">"
+    }
+  },
+  "supervision": {
+    "backbone": "healthy and pre-fault train observations; healthy validation selection",
+    "head": "17 labeled training fault events; 6 validation fault events for threshold calibration",
+    "test": "final evaluation only; historically exposed during method development"
+  },
+  "reporting": {
+    "pa": "offline event diagnostic only",
+    "aggregation": "metrics computed separately per seed; three-seed mean and sample standard deviation"
+  },
+  "expected_windows": {
+    "healthy_train": [
+      1475,
+      0
+    ],
+    "healthy_val": [
+      386,
+      0
+    ],
+    "head_train": [
+      1928,
+      447
+    ],
+    "head_val": [
+      489,
+      101
+    ],
+    "test": [
+      1123,
+      227
+    ]
+  }
+}
