@@ -1,13 +1,8 @@
-"""Published FCR-AD healthy forecasting backbone.
+"""FCR-AD forecasting backbone for asynchronous telemetry.
 
-The APN-derived TAPA encoder processes observations at their native timestamps.
-A shared causal TCN and uniform patch mean form historical channel contexts.
-Only history and query timestamps enter this module, never evidence values.
-
-The construction order and unused historical state-gate parameters are retained
-so that the original mean-pooling checkpoints load with ``strict=True`` and the
-same seeded parameter initialization is preserved. The state gate is not part
-of the FCR-AD forward computation.
+APN-derived TAPA, a causal TCN and mean patch pooling produce channel contexts.
+Initialization order and state-gate parameters preserve checkpoint compatibility;
+state-gate parameters are unused in the forward pass.
 """
 
 from __future__ import annotations
@@ -25,7 +20,7 @@ from .time_encoder import TimeEncoder
 
 
 class _HistoricalStateGate(nn.Module):
-    """Checkpoint compatibility parameters; unused by the published model."""
+    """Parameters retained for checkpoint compatibility; unused in forward."""
 
     def __init__(self, d_model: int) -> None:
         super().__init__()
@@ -37,7 +32,7 @@ class _HistoricalStateGate(nn.Module):
 
 
 class _InitialProbabilisticDecoder(nn.Module):
-    """Reproduce historical initialization before the mean decoder replaces it."""
+    """Initializer for checkpoint-compatible parameter ordering."""
 
     def __init__(self, d_model: int, d_te: int,
                  time_encoder: TimeEncoder) -> None:
@@ -79,8 +74,7 @@ class FCRADBackbone(nn.Module):
         self.temporal_encoder = TemporalPatchEncoder(
             d_model, temporal_bottleneck, dropout=dropout
         )
-        # Preserve the exact historical random-number consumption and module
-        # registration order before the mean-pooling intervention is applied.
+        # Preserve checkpoint-compatible module order and seeded initialization.
         self.aggregation = QueryTimePatchAggregation(
             num_channels, num_patches, d_model, d_te, pos_encoding='sinusoidal'
         )

@@ -32,7 +32,7 @@ python -m unittest discover -s tests -v
 python -m fcr_ad smoke
 ```
 
-The smoke command exercises one gradient update, feature extraction, a small classifier, calibration, and evaluation on generated inputs. Its output is an API check, not an ALFA experiment result. Install the appropriate PyTorch build for your CPU or CUDA platform.
+The smoke command runs one gradient update, feature extraction, classifier fitting, calibration, and evaluation on synthetic inputs. Install the appropriate PyTorch build for your CPU or CUDA platform.
 
 ## ALFA data
 
@@ -70,7 +70,6 @@ Feature CSVs contain `t` and the channel columns in `metadata/feature_mapping.js
 ## Train and evaluate
 
 ```bash
-# All three development runs freeze before any test evaluation starts.
 python -m fcr_ad run --data-root data/alfa --output runs/fcr_ad --seeds 42 43 44 --device cuda
 ```
 

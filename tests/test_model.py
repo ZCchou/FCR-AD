@@ -1,4 +1,4 @@
-"""Behavioral contracts for the standalone forecasting backbone."""
+"""Tests for forecasting shapes, masks and checkpoint compatibility."""
 
 import unittest
 

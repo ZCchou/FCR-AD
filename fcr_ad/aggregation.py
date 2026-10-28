@@ -82,12 +82,7 @@ class QueryBasedAggregation(nn.Module):
 
 
 class QueryTimePatchAggregation(nn.Module):
-    """Query-time-aware patch aggregation for optimized ALFA forecasting.
-
-    Unlike the strict APN query module, this module returns one context vector
-    per future query time, allowing the decoder to emphasize different patches
-    for different horizons.
-    """
+    """Query-time attention over temporal patches with [B, N, Q, D] output."""
 
     def __init__(
         self,
@@ -135,11 +130,10 @@ class QueryTimePatchAggregation(nn.Module):
 
 
 class MeanPatchAggregation(QueryTimePatchAggregation):
-    """The published FCR-AD uniform mean pooling over temporal patches.
+    """Uniform mean pooling over position-encoded temporal patches.
 
-    The inherited attention initializer is used only to preserve the historical
-    model's initialization order. The backbone removes its unused attention
-    parameters after initialization.
+    The inherited initializer preserves checkpoint-compatible parameter order;
+    the backbone removes the unused attention parameters after initialization.
     """
 
     def channel_context(self, patches: torch.Tensor) -> torch.Tensor:

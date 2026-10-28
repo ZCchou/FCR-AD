@@ -1,4 +1,4 @@
-"""Command line entry points for the released FCR-AD pipeline."""
+"""Command-line interface for FCR-AD."""
 
 from __future__ import annotations
 
@@ -68,7 +68,7 @@ def smoke(device='cpu'):
     loss.backward()
     optimizer.step()
     x = extract_features(model, dataset, device, 4)
-    # These five trees are an API smoke test, not the paper experiment.
+    # Use a small classifier for the synthetic example.
     head = Head().fit(x[:16], dataset.rows[:16], dict(n_estimators=5,min_samples_leaf=1),42)
     scores = head.predict(x[16:])
     labels = [row['label'] for row in dataset.rows[16:]]

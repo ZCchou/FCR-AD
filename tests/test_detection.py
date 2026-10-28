@@ -1,4 +1,4 @@
-"""Behavioral tests for the standalone residual/context anomaly detector."""
+"""Tests for residual/context features, calibration and event metrics."""
 
 import tempfile
 import unittest

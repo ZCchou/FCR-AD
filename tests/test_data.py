@@ -1,4 +1,4 @@
-"""Small behavioral tests; no downloaded telemetry or original project imports."""
+"""Tests for native observation windows and training normalization."""
 
 import tempfile
 import unittest

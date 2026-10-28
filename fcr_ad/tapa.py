@@ -1,7 +1,6 @@
-"""Time-Aware Patch Aggregation, adapted from the APN forecasting method.
+"""Time-Aware Patch Aggregation, adapted from APN (Liu et al., AAAI 2026).
 
-FCR-AD reuses APN's soft temporal support construction; TAPA is not introduced
-as a new contribution of FCR-AD. See the repository's attribution notice.
+Reference: https://doi.org/10.1609/aaai.v40i28.39563
 """
 
 from __future__ import annotations
@@ -67,11 +66,9 @@ class TAPA(nn.Module):
         self.delta = nn.Parameter(torch.zeros(num_channels, num_patches))
         self.lambda_ = nn.Parameter(init_lambda)
 
-        # One learnable temperature parameter per channel. The TAPA formula
-        # remains Softplus(kappa); this only controls its initial value.
+        # Each channel has a positive temperature: softplus(kappa).
         if temperature_init == "original":
-            # Reference APN initializes tau_params to zero, so the initial
-            # temperature is softplus(0) ~= 0.693.
+            # APN initialization: softplus(0) ~= 0.693.
             init_kappa = torch.zeros(num_channels)
         elif temperature_init is None or temperature_init == "legacy":
             init_kappa = torch.ones(num_channels)
@@ -150,8 +147,7 @@ class TAPA(nn.Module):
         denominator = alpha.sum(dim=2).unsqueeze(-1) + self.eps
         h_bar = numerator / denominator
 
-        # Project aggregated value/time features to model width. The optional
-        # FFN + residual LayerNorm path matches the reference APN code.
+        # Project pooled features, then optionally apply the residual FFN.
         h_proj = self.value_time_proj(h_bar)
         if self.use_ffn:
             output = self.norm(h_proj + self.ffn(h_proj))

@@ -23,12 +23,10 @@ The remaining 256 columns concatenate the mean and elementwise maximum of 128-di
 
 The classifier uses event/normal-flight group weights and positive mass multiplier 0.5. Calibration uses Raw predictions only. PA is applied after thresholds are fixed and uses the original Raw predictions to determine whether an annotated event was hit.
 
-## Compatibility and validation
+## Checkpoint compatibility
 
 The model retains the registered historical state-gate parameters and original construction order so the formal mean-pooling checkpoint loads strictly and seeded initialization consumes the same random numbers. The state gate does not participate in the published forward computation. The model stores 113517 parameters, of which 104937 participate in the forward path.
 
-Local release verification compared the independent package with the formal implementation: seeded initialization and post-initialization RNG, checkpoint keys, forecasts, channel contexts, sampled real-data features, window metadata, normalization and source CSV preparation. These checks use local experiment artifacts; the public tests use generated inputs and do not require those private filesystem locations.
-
-The released runner has explicit development and test phases. For a multi-seed run, all seeds finish development and freeze before the first seed's test is opened. Frozen artifact and source hashes are checked before evaluation. Missing data are represented by masks; an audited observation overflow raises an error instead of truncating records.
+The runner separates training and evaluation. For a multi-seed run, all seeds finish development and freeze before the first seed's test is opened. Frozen artifact and source hashes are checked before evaluation. Missing data are represented by masks; observation counts exceeding the allocated capacity raise an error.
 
 Only load checkpoint and joblib files obtained from a trusted source. These formats can contain executable Python objects.

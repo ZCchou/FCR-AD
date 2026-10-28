@@ -100,8 +100,7 @@ def _event_report(rows, prediction) -> tuple[dict, list]:
             first_time = min(float(rows[i]['decision_time']) for i in hits)
             onsets = [float(rows[i]['fault_start_s']) for i in indices
                       if rows[i].get('fault_start_s') is not None]
-            # Missing onset means latency cannot be estimated; retain the
-            # historical convention of measuring from the first hit itself.
+            # Use the first hit as the reference when the onset is unavailable.
             onset = min(onsets) if onsets else first_time
             delay = max(0., first_time - onset)
             delays.append(delay)
