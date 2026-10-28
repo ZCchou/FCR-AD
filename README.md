@@ -114,10 +114,4 @@ calibration = choose_threshold(validation_labels, head.predict(validation_featur
 - `tests/`: model/data contracts, threshold and event handling, serialization, and training/freeze checks.
 - `docs/implementation.md`: tensor interfaces, feature order and checkpoint compatibility.
 
-## Acknowledgments
 
-The temporal aggregation follows APN: X. Liu et al., “Rethinking Irregular Time Series Forecasting: A Simple Yet Effective Baseline,” AAAI, 2026, [doi:10.1609/aaai.v40i28.39563](https://doi.org/10.1609/aaai.v40i28.39563).
-
-ALFA: A. Keipour, M. Mousaei and S. Scherer, “ALFA: A Dataset for UAV Fault and Anomaly Detection,” *The International Journal of Robotics Research*, 40(2–3), 515–520, 2021, [doi:10.1177/0278364920966642](https://doi.org/10.1177/0278364920966642). Follow the original dataset's terms and citation requirements.
-
-This release has no project license selected yet. Third-party dependency and dataset rights remain with their respective owners.
